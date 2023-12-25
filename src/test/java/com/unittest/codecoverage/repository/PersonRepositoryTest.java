@@ -55,4 +55,28 @@ public class PersonRepositoryTest {
 
         assertNull(result);
     }
+
+
+    @Test
+    public void testDelete_shouldThrowExceptionWhenNameIsNull() {
+        PersonRepository repository = new PersonRepository();
+        String name = null;
+
+        assertThrows(NullPointerException.class, () -> repository.delete(name));
+    }
+    @Test
+    public void testGet_shouldThrowExceptionWhenNameIsNull() {
+        PersonRepository repository = new PersonRepository();
+        String name = null;
+
+        assertThrows(NullPointerException.class, () -> repository.get(name));
+    }
+    @Test
+    public void testUpdate_shouldThrowExceptionWhenNameIsNull() {
+        PersonRepository repository = new PersonRepository();
+        Person person = null;
+
+        assertThrows(NullPointerException.class, () -> repository.update(person));
+    }
+
 }
