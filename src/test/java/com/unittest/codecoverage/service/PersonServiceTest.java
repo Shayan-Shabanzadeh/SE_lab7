@@ -1,6 +1,8 @@
 package com.unittest.codecoverage.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -139,4 +141,42 @@ public class PersonServiceTest {
 	}
 
 
+	@Test
+	public void testGet_shouldReturnPersonWhenNameIsProvided() {
+		String name = "John";
+		Person expectedPerson = new Person();
+		expectedPerson.setName(name);
+		expectedPerson.setAge(25);
+		expectedPerson.setGender(Gender.M);
+
+		when(repository.get(name)).thenReturn(expectedPerson);
+
+		Person result = service.get(name);
+
+		assertEquals(expectedPerson, result);
+	}
+
+	@Test
+	public void testDelete_shouldDeletePersonWhenNameIsProvided() {
+		String name = "John";
+
+		service.delete(name);
+
+		verify(repository, times(1)).delete(name);
+	}
+
+	@Test
+	public void testUpdate_shouldUpdatePersonWithoutErrors() {
+		Person person = new Person();
+		person.setName("Name");
+		person.setAge(21);
+		person.setGender(Gender.M);
+
+		doNothing().when(repository).update(any(Person.class));
+
+		service.update(person);
+
+		verify(repository).update(person);
+	}
 }
+
